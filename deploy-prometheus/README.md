@@ -21,7 +21,7 @@ In this sample, we run Prometheus pod inside Kubernetes cluster
 ## CREATE A CONFIG MAP
 [root@master ~]# kubectl create -f config-map.yaml -n monitoring
 
-## CREATE PERSISTEN VOLUME FOR PROMETHUS
+## CREATE PERSISTENT VOLUME FOR PROMETHUS
 [root@master ~]# kubectl create -f prometheus-storage-volume-pv.yaml
 
 [root@master ~]# kubectl create -f prometheus-storage-volume-pvc.yaml
