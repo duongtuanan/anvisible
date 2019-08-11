@@ -23,6 +23,7 @@ In this sample, we run Prometheus pod inside Kubernetes cluster
 
 ## CREATE PERSISTEN VOLUME FOR PROMETHUS
 [root@master ~]# kubectl create -f prometheus-storage-volume-pv.yaml
+
 [root@master ~]# kubectl create -f prometheus-storage-volume-pvc.yaml
 
 ## CREATE A PROMETHEUS DEPLOYMENT
