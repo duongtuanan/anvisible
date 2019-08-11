@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-storage-volume-pv
+  namespace: monitoring
+spec:
+  capacity:
+    storage: 40Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy:
+    Retain
+  nfs:
+    path: /var/lib/prometheus-storage-volume
+    server: 10.33.1.9
+    readOnly: false
+
+
+
