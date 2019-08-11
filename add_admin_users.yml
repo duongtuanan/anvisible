@@ -1,0 +1,35 @@
+---
+- hosts: all
+  user: root
+
+  tasks:
+  - include_vars: usersNoPassword.yml
+
+  - name: Add users | Create users, shell, home dirs
+    user: name={{ item.username }} shell=/bin/bash createhome=yes
+    with_items: '{{users}}'
+
+  - name: .ssh folder | Create folder to store ssh key
+    file: path=/home/{{item.username }}/.ssh state=directory owner={{item.username}} group={{item.username}} mode=0755
+    with_items: '{{users}}'
+
+  - name: Authorized_keys | Copy ssh keys to remote hosts
+    template:  src=pub_keys/{{ item.username }}.pub dest='/home/{{ item.username }}/.ssh/authorized_keys' owner={{item.username}} group={{item.username}} mode=0755
+    with_items: '{{users}}'
+  
+  - name: Sudoers update | No need enter password
+    lineinfile: "dest=/etc/sudoers
+      insertafter=EOF
+      line='{{ item.username }} ALL=(ALL) NOPASSWD: ALL'
+      regexp='^{{ item.username }} .*'
+      state=present"
+    when: '{{ item.use_sudo }} == True'
+    with_items: '{{users}}'
+
+  - name: SSH configuration | Push sshd file
+    template: src=config/sshd_config dest=/etc/ssh/sshd_config owner=root group=root mode=0600
+    notify: restart sshd
+ 
+  handlers:
+  - name: restart sshd
+      service: name=sshd state=restarted
