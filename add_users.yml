@@ -1,0 +1,26 @@
+---
+- hosts: all
+  user: root
+
+  tasks:
+  - include_vars: usersNeedPassword.yml
+
+  - name: Add users | create users, shell, home dirs
+    user: name={{ item.username }} shell=/bin/bash createhome=yes group=wheel password=$6$Som3S@lt$u.eRnB7sObXPSKhlSHNHVbNJ9wDlLEI2n4S74Pt1DBRkVTVW5JYizknwTNAz8n6A9OcYO8CDqGzEtzOfVyK6w0
+    with_items: '{{users}}'
+
+  - name: Create folder to store ssh key
+    file: path=/home/{{item.username }}/.ssh state=directory owner={{item.username}} mode=0755
+    with_items: '{{users}}'
+
+  - name: Copy file
+    template:  src=pub_keys/{{ item.username }}.pub dest='/home/{{ item.username }}/.ssh/authorized_keys' owner={{item.username}} mode=0755
+    with_items: '{{users}}'
+
+  
+# The default password is Changeme
+# To change password:
+#   In CLI, type: python
+#   Then, type: import crypt
+#   Then, type: crypt.crypt('YourPassInPlainText', '$6$Som3S@lt$')
+#   Then update the new hex as new password in above code  
