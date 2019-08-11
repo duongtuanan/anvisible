@@ -1,0 +1,1 @@
+To monitor k8s, you only need to have a running Kubernetes cluster with deployed Prometheus. Prometheus will use metrics provided by cAdvisor via kubelet service (runs on each node of Kubernetes cluster by default) and via kube-apiserver service only.
