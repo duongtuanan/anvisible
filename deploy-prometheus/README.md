@@ -3,14 +3,14 @@ To monitor k8s, you only need to have a running Kubernetes cluster with deployed
 ## PREPARATION
 
 Assume that you have:
-•	Kubernetes cluster up and running.
-•	Grafana instance up and running (inside or outside cluster).
+- Kubernetes cluster up and running.
+- Grafana instance up and running (inside or outside cluster).
 
 In this sample, we run Prometheus pod inside Kubernetes cluster 
-•	Run the Prometheus pod on the Kubernetes cluster.
-•	Get metrics in a cluster with Prometheus pods.
-•	Visualize metrics with Grafana outside cluster.
-•	The retention period is 1 day for data acquired by Prometheus pod.
+- Run the Prometheus pod on the Kubernetes cluster.
+- Get metrics in a cluster with Prometheus pods.
+- Visualize metrics with Grafana outside cluster.
+- The retention period is 1 day for data acquired by Prometheus pod.
  
 ## CREATE A NAMESPACE
 [root@master ~]# kubectl create namespace monitoring
